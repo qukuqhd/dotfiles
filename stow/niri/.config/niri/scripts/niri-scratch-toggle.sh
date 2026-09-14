@@ -122,30 +122,33 @@ case "$TARGET_APP" in
     wallpaper|wallpapers|"wallpaper-picker"|WallpaperPicker|*wallpaper-picker.py)
         if [ -f "$HOME/.config/niri/scripts/wallpaper-picker.py" ]; then
             niri msg action spawn -- "$HOME/.config/niri/scripts/wallpaper-picker.py"
-        elif [ -f "${BASH_SOURCE%/*}/wallpaper-picker.py" ]; then
-            niri msg action spawn -- "${BASH_SOURCE%/*}/wallpaper-picker.py"
+        elif [ -f "$(dirname "${BASH_SOURCE[0]}")/wallpaper-picker.py" ]; then
+            niri msg action spawn -- "$(dirname "${BASH_SOURCE[0]}")/wallpaper-picker.py"
         else
             niri msg action spawn -- wallpaper-picker.py
         fi
         ;;
 
+    clean|clean-cache|clean-cache.py|\~/.config/fish/clean-cache|\~/.config/fish/clean-cache.py)
+        # 本地缓存清理脚本：在浮动 scratchpad 终端里运行（不依赖 nyxniri）
+        if [ -x "$HOME/.config/fish/clean-cache" ]; then
+            niri msg action spawn -- kitty --app-id "scratchpad" -e /bin/bash "$HOME/.config/fish/clean-cache"
+        else
+            printf 'niri-scratch-toggle: %s not found\n' "$HOME/.config/fish/clean-cache" >&2
+        fi
+        ;;
 
     *)
         # Custom command or script execution
         if [[ "$TARGET_APP" =~ ^~.* ]]; then
             TARGET_APP="${TARGET_APP/#\~/$HOME}"
         fi
-        if [ "$TARGET_APP" = "clean-cache" ] && [ -x "$HOME/.config/fish/clean-cache" ]; then
-            TARGET_APP="$HOME/.config/fish/clean-cache"
-        fi
-
-        # If it is clean-cache or interactive terminal tool, launch inside floating scratchpad terminal
-        if [ "$TARGET_APP" = "$HOME/.config/fish/clean-cache" ] || [[ "$TARGET_APP" == *clean-cache* ]]; then
-            niri msg action spawn -- kitty --app-id "scratchpad" -e /bin/bash "$TARGET_APP"
-        elif [ -x "$TARGET_APP" ] || command -v "$TARGET_APP" >/dev/null 2>&1; then
+        if [ -x "$TARGET_APP" ] || command -v "$TARGET_APP" >/dev/null 2>&1; then
             niri msg action spawn -- "$TARGET_APP"
         else
-            niri msg action spawn -- bash -c "$TARGET_APP"
+            # No shell-string execution: menu cmds are data, not commands to
+            # interpret. Wrap anything fancier in a script and point cmd at it.
+            printf 'niri-scratch-toggle: refusing to run "%s" as a shell command\n' "$TARGET_APP" >&2
         fi
         ;;
 esac

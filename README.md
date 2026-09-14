@@ -45,7 +45,7 @@ cd ~/dotfiles
 | `wlsunset` | EyeCare 护眼模式的色温调节 |
 | `mpvpaper` + `ffmpeg` | 动态壁纸 |
 | `jq` | 脚本解析 `niri msg --json`、`hyprctl -j` 的输出 |
-| `python-gobject` + `gtk4` + `gtk-layer-shell` + `python-cairo` | Orbit 启动器与壁纸选择器的 GTK4 层壳界面 |
+| `python-gobject` + `gtk3` + `gtk-layer-shell` + `python-cairo` | Orbit 启动器与壁纸选择器的 GTK3 层壳界面（脚本里要求 `Gtk 3.0`） |
 | `wl-clipboard` | kitty 全选复制、脚本写剪贴板 |
 | `libnotify` | `notify-send` 通知（EyeCare 开关提示） |
 | `util-linux` | `flock`，EyeCare 切换的串行锁（基础系统自带） |
@@ -88,7 +88,7 @@ cd ~/dotfiles
 
 ```bash
 sudo pacman -S --needed niri noctalia kitty alacritty fish wlsunset mpvpaper ffmpeg \
-  jq python-gobject gtk4 gtk-layer-shell python-cairo wl-clipboard libnotify util-linux \
+  jq python-gobject gtk3 gtk-layer-shell python-cairo wl-clipboard libnotify util-linux \
   tmux fzf neovim ripgrep fd unzip gcc make nodejs npm tree-sitter-cli emacs noto-fonts-cjk
 ```
 
