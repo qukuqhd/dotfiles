@@ -48,14 +48,14 @@ git clone <your-centaur-fork>   ~/dotfiles/external/emacs
 stow --no-folding -t ~ -d ~/dotfiles/stow niri
 ```
 
-## 与 NyxNiri 的关系
+## 与 [NyxNiri](https://github.com/ech678/NyxNiri) 的关系
 
-`~/NyxNiri` 仍在管理 `fish`、`starship`、`fastfetch`、`zed`、
+[`~/NyxNiri`](https://github.com/ech678/NyxNiri) 仍在管理 `fish`、`starship`、`fastfetch`、`zed`、
 `xdg-desktop-portal` 等系统层配置，部署方式是**复制**。它与本仓库重叠的
 只有 `.config/niri` 和 `.config/kitty`：
 
 - 重新运行 `nyxniri` 的安装/更新流程会覆盖这两个目录里的符号链接。
-- 需要改 niri/kitty 时，请改本仓库后 `./install.sh link`，不要再走 NyxNiri。
+- 需要改 niri/kitty 时，请改本仓库后 `./install.sh link`，不要再走 [NyxNiri](https://github.com/ech678/NyxNiri)。
 
 ## 主题链路
 
