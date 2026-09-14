@@ -151,11 +151,26 @@ emacs --batch --eval '(message "ok")'
 ## 与 [NyxNiri](https://github.com/ech678/NyxNiri) 的关系
 
 [`~/NyxNiri`](https://github.com/ech678/NyxNiri) 仍在管理 `fish`、`starship`、`fastfetch`、`zed`、
-`xdg-desktop-portal` 等系统层配置，部署方式是**复制**。它与本仓库重叠的
-只有 `.config/niri` 和 `.config/kitty`：
+`xdg-desktop-portal` 等系统层配置，部署方式是**复制**。它与本仓库重叠的有
+`.config/niri`、`.config/kitty` 和 `.config/noctalia`：
 
-- 重新运行 `nyxniri` 的安装/更新流程会覆盖这两个目录里的符号链接。
-- 需要改 niri/kitty 时，请改本仓库后 `./install.sh link`，不要再走 [NyxNiri](https://github.com/ech678/NyxNiri)。
+- 重新运行 `nyxniri` 的安装/更新流程会覆盖这些目录里的符号链接。
+- 尤其注意 `noctalia-config.toml`：`nyxniri` 的 fcitx 模块会重写它来注册
+  NyxMellow 皮肤，写入后**符号链接会变成实体文件**（实测 2026-09-14），
+  于是本仓库的改动不再生效。跑完 `nyxniri` 后请执行 `./install.sh status`
+  检查，出现冲突就删除实体文件后 `./install.sh link` 重建链接。
+- 需要改 niri / kitty / noctalia 时，请改本仓库后 `./install.sh link`，
+  不要再走 [NyxNiri](https://github.com/ech678/NyxNiri)。
+
+### fcitx5 皮肤为什么要重启输入法
+
+fcitx5 只在**启动时**读取主题资源（`theme.conf` / `panel.svg` / `highlight.svg`）。
+实测（inotify 监控主题目录）：`fcitx5-remote --check -r` 重载配置时零文件访问，
+把 `classicui.conf` 的 `Theme` 改成别的名字再改回来同样零访问。所以 Noctalia
+重渲染皮肤后必须重启 fcitx5，否则候选窗会一直停留在启动时那份皮肤。
+
+本仓库用 `noctalia/fcitx-theme-reload.sh` 处理：先比对皮肤内容指纹，只有真的
+变了才重启 fcitx5，避免每次调色板变化都打断输入。Noctalia 的模板 hook 指向它。
 
 ## 主题链路
 
