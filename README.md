@@ -2,7 +2,7 @@
 
 个人 dotfiles 仓库：stow 风格布局 + 符号链接部署。收录当前正在使用的
 窗口管理器、终端、nvim、emacs 配置，以及驱动配色的 Noctalia 模板。
-
+![alt text](image.png)
 ## 布局
 
 ```
@@ -47,39 +47,6 @@ git clone <your-centaur-fork>   ~/dotfiles/external/emacs
 ```bash
 stow --no-folding -t ~ -d ~/dotfiles/stow niri
 ```
-
-## 收录内容
-
-| 包 | 内容 |
-|---|---|
-| `niri` | `config.kdl` 及拆分的 `binds/layout/rules/animations/monitor`、`__custom__` 自定义项、`scripts/`（EyeCare 切换、Scratch 菜单、Orbit 启动器、壁纸选择器） |
-| `kitty` | `kitty.conf`、`__custom__.conf`（字体等个人偏好挂载点） |
-| `alacritty` | `alacritty.toml`（Maple Mono 字体、透明度、Windows 风格按键） |
-| `foot` | `foot.ini` |
-| `hypr` | `hyprland.conf`/`.lua`、`scripts/`（截图、Scratch、EyeCare） |
-| `noctalia` | `noctalia-config.toml`、`templates/`（nvim/emacs/gtk/zed/vscode 主题模板）、hooks |
-| `noctalia-integrations` | labwc / sway / mango / umbriel / scroll 的 Noctalia 主题桥接配置 |
-| `external/nvim` | kickstart.nvim fork（`init.lua` 个性化 + `lua/custom/` 插件集） |
-| `external/emacs` | Centaur Emacs fork（`custom.el`、`lisp/init-*.el`、`themes/`） |
-
-## 有意不纳入版本控制的文件
-
-这些是**运行时生成物**，提交进来只会制造噪音，且会在下次换主题时被覆盖：
-
-| 文件 | 生成者 |
-|---|---|
-| `niri/noctalia.kdl` | Noctalia |
-| `kitty/themes/noctalia.conf`、`kitty/current-theme.conf`(软链) | Noctalia |
-| `alacritty/themes/noctalia.toml` | Noctalia |
-| `foot/themes/noctalia` | Noctalia |
-| `ghostty/themes/noctalia`、`wezterm/colors/Noctalia.toml` | Noctalia（这两个终端暂无自有配置，故未收录） |
-| `nvim/lua/matugen.lua` | Noctalia（换主题时重写，请勿提交） |
-| `.emacs.d/themes/` 中的 Noctalia 产物、`elpa/`、`eln-cache/` | Emacs / Noctalia |
-| `noctalia/settings.json` | Noctalia 运行时状态（位置、天气等） |
-
-例外是 `niri/effects.kdl`：仓库里保留一份指向 `effects_normal.kdl` 的默认
-链接（全新机器上 niri 才能通过 config 校验），但 `install.sh` 把它列为
-“运行时状态”，一旦存在就绝不覆盖——EyeCare 的开关状态由它保存。
 
 ## 与 NyxNiri 的关系
 
