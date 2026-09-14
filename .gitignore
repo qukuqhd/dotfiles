@@ -1,0 +1,13 @@
+# 独立 git 仓库（各自维护自己的历史，不纳入本仓库）
+external/nvim/
+external/emacs/
+
+# 运行时生成物 / 备份
+__pycache__/
+*.pyc
+*.tmp
+*.bak
+*.swp
+
+# 迁移期备份
+dotfiles-backup-*.tar.gz
