@@ -316,4 +316,4 @@ output_path = "/home/gangx/.local/share/fcitx5/themes/nyxmellow/panel.svg"
 index = 2
 input_path = "/home/gangx/.local/share/fcitx5/themes/nyxmellow/templates/highlight.svg"
 output_path = "/home/gangx/.local/share/fcitx5/themes/nyxmellow/highlight.svg"
-post_hook = "bash /home/gangx/.config/noctalia/fcitx-theme-reload.sh"
+post_hook = "fcitx5-remote --check -r >/dev/null 2>&1 || true; busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadAddonConfig s classicui >/dev/null 2>&1 || true"
