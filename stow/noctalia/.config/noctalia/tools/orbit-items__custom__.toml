@@ -1,5 +1,5 @@
 # =============================================================================
-# NyxNiri Orbit Launcher (星环启动器) · 自定义配置文件 (Dunder Custom Configuration)
+# Nyxuri Orbit Launcher (星环启动器) · 自定义配置文件 (Dunder Custom Configuration)
 # =============================================================================
 # 遵循 Dunder 协议: 文件名含 `__custom__`，升级与安装时会被自动保留，绝不被覆盖。
 #
@@ -97,7 +97,7 @@ color_key = "secondary"
   name = "Clean Cache"
   desc = "Free Disk Space"
   icon = "󰃢"
-  cmd = "~/.config/fish/clean-cache"
+  cmd = "clean"
   shortcut = "3"
   color_key = "secondary"
 
@@ -141,6 +141,6 @@ id = "wallpaper"
 name = "Wallpapers"
 desc = "Static & Live"
 icon = "󰸉"
-cmd = "~/.config/niri/scripts/wallpaper-picker.py"
+cmd = "~/.config/noctalia/tools/wallpaper-picker.py"
 shortcut = "4"
 color_key = "secondary"

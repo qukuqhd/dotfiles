@@ -317,3 +317,9 @@ index = 2
 input_path = "/home/gangx/.local/share/fcitx5/themes/nyxmellow/templates/highlight.svg"
 output_path = "/home/gangx/.local/share/fcitx5/themes/nyxmellow/highlight.svg"
 post_hook = "fcitx5-remote --check -r >/dev/null 2>&1 || true; busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadAddonConfig s classicui >/dev/null 2>&1 || true"
+
+# Material You 动态色板（Noctalia 渲染后供星环启动器与壁纸选择器读取）
+[theme.templates.user.nyxuri_palette]
+index = 9
+input_path = "/home/gangx/.config/noctalia/templates/palette.toml"
+output_path = "/home/gangx/.cache/nyxuri/palette.toml"

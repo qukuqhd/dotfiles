@@ -1,5 +1,5 @@
 """
-NyxNiri Wallpaper Picker — Material 3 Expressive (M3E) Design System.
+Material 3 Expressive theme support for the Nyxuri wallpaper picker.
 
 From M3 (published values, transcribed verbatim): the 10-step shape scale,
 30-style type scale, 6 elevation levels, state-layer opacities, and the
@@ -132,7 +132,10 @@ DUR_STATE_MS = 150
 DUR_FAST_SPATIAL_MS = 350
 DUR_EXIT_MS = 200
 
-STARSHIP_PALETTE_PATH = "~/.cache/noctalia/starship-palette.toml"
+PALETTE_PATH = "~/.cache/nyxuri/palette.toml"
+LEGACY_PALETTE_PATH = "~/.cache/nyxniri/palette.toml"
+NYXNIRI_PALETTE_PATH = PALETTE_PATH
+NYXURI_PALETTE_PATH = PALETTE_PATH
 
 # Starship (Catppuccin-compatible) key candidates per M3 role, first hit wins.
 _ROLE_SOURCES = {
@@ -209,10 +212,10 @@ def _sl(base, fg, opacity):
 
 # ── Palette loading ────────────────────────────────────────────────────────
 
-def _load_starship_colors(path=None):
-    """Parse Noctalia's starship palette cache into a key → rgb dict."""
+def _load_toml_palette(path):
+    """Parse a simple key = "value" TOML file into a key -> normalized RGB dict."""
     colors = {}
-    p = os.path.expanduser(path or STARSHIP_PALETTE_PATH)
+    p = os.path.expanduser(path)
     if not os.path.isfile(p):
         return colors
     try:
@@ -230,24 +233,48 @@ def _load_starship_colors(path=None):
     return colors
 
 
+def _load_m3_palette(path=None):
+    """Load native Nyxuri M3 palette (~/.cache/nyxuri/palette.toml)."""
+    target = path or (
+        NYXURI_PALETTE_PATH
+        if NYXURI_PALETTE_PATH != PALETTE_PATH
+        else (NYXNIRI_PALETTE_PATH if NYXNIRI_PALETTE_PATH != PALETTE_PATH else PALETTE_PATH)
+    )
+    expanded = os.path.expanduser(target)
+    if not path and target == PALETTE_PATH and not os.path.isfile(expanded):
+        legacy = os.path.expanduser(LEGACY_PALETTE_PATH)
+        if os.path.isfile(legacy):
+            return _load_toml_palette(legacy)
+    return _load_toml_palette(target)
+
+
 def build_tokens(raw=None):
-    """Compile the full M3 color-role set from starship raw colors (or fallback).
+    """Compile the full M3 color-role set from the shared palette.
 
     Container tiers approximate the M3 tonal ladder: dark surfaces step toward
     the on-color (tones 4/10/12/17/22), light surfaces step down toward the
     on-color while `lowest` steps up toward white (tone 100).
     """
     if raw is None:
-        raw = _load_starship_colors()
+        raw = _load_m3_palette()
+        if not raw:
+            raw = {}
 
     def pick(role):
-        for key in _ROLE_SOURCES[role]:
-            if key in raw:
-                v = raw[key]
-                if isinstance(v, str):
-                    v = hex_to_rgb(v)
-                if v is not None:
-                    return v
+        if role in raw:
+            v = raw[role]
+            if isinstance(v, str):
+                v = hex_to_rgb(v)
+            if v is not None:
+                return v
+        if role in _ROLE_SOURCES:
+            for key in _ROLE_SOURCES[role]:
+                if key in raw:
+                    v = raw[key]
+                    if isinstance(v, str):
+                        v = hex_to_rgb(v)
+                    if v is not None:
+                        return v
         return _FALLBACK[role]
 
     primary = pick("primary")

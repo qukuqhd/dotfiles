@@ -64,8 +64,8 @@ binds {
     Mod+Grave { spawn "~/.config/niri/scripts/niri-scratch-toggle.sh" "kitty"; }
 
     // 呼出 Orbit Launcher M3E 矢量星环启动器 (按住 Super 点鼠标前侧键，或键盘 Mod+A) / Open Orbit Launcher M3E radial menu
-    Mod+A repeat=false { spawn "~/.config/niri/scripts/orbit-launcher.py"; }
-    Mod+MouseForward repeat=false { spawn "~/.config/niri/scripts/orbit-launcher.py"; }
+    Mod+A repeat=false { spawn "~/.config/noctalia/tools/orbit-launcher.py"; }
+    Mod+MouseForward repeat=false { spawn "~/.config/noctalia/tools/orbit-launcher.py"; }
 
     // -------------------------------------------------------------------------
     // 3. 焦点导航与窗口移动 / Focus Navigation & Window Movement
