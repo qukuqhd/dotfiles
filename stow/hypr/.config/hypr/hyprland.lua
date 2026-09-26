@@ -407,7 +407,7 @@ end)
 local eyecare = home .. "/.config/hypr/scripts/toggle-eyecare.sh"
 local scratch = home .. "/.config/hypr/scripts/hypr-scratch-toggle.sh"
 local shot    = home .. "/.config/hypr/scripts/hypr-shot.sh"
-local orbit   = home .. "/.config/niri/scripts/orbit-launcher.py"
+local orbit   = home .. "/.config/noctalia/tools/orbit-launcher.py"
 
 -- 1. 会话与系统
 -- niri 的 Mod+Tab 是 overview, Hyprland 需要 overview 插件, 暂不绑定
