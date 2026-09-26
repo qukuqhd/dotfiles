@@ -148,7 +148,36 @@ emacs --batch --eval '(message "ok")'
 首次进入会话后 Noctalia 才会渲染主题文件；若 `kitty/themes/noctalia.conf`
 还没生成，执行一次 `noctalia msg templates-apply` 即可。
 
-## 与 [NyxNiri](https://github.com/ech678/NyxNiri) 的关系
+## 换机器复现
+
+仓库能带走的是「配置与脚本」，以下内容不在版本控制内，需要在新机器上单独准备：
+
+| 内容 | 说明 |
+|---|---|
+| `external/nvim`、`external/emacs` | 独立 git 仓库，先 clone 自己的 fork 到 `external/` 再 `./install.sh link` |
+| Noctalia 渲染产物 | `niri/noctalia.kdl`、`kitty/themes/noctalia.conf`、`alacritty`/`foot`/`hypr` 的 noctalia 主题等，首次进入会话后由 Noctalia 生成，也可手动 `noctalia msg templates-apply` |
+| fcitx5 输入法本体配置 | 仓库只收录 `conf/classicui.conf`；`profile`、`config`、各输入法的 `conf/*.conf` 需自行配置 |
+| NyxMellow 皮肤资产 | `~/.local/share/fcitx5/themes/nyxmellow/`（模板 + 预览 SVG）来自上游安装器，未入库；缺失时候选窗会回落默认皮肤 |
+| 字体 | `maple-mono-nf-cn-unhinted`（AUR）；kitty 的字重依赖 `~/.config/fontconfig/fonts.conf`（同样未入库） |
+| 壁纸与插件 | 壁纸目录默认 `~/图片/Wallpapers`（含 `video/`）；wallhaven / bongocat / w-engine / echolyrics / mpvpaper 插件需在 Noctalia 内安装 |
+
+`noctalia-config.toml` 里的模板路径目前是本机绝对路径（`/home/gangx/...`）。
+实测 Noctalia **不会**展开 `$HOME` 或 `~`（`$XDG_CONFIG_HOME` 可以），所以换用户名时
+需要替换一次：
+
+```bash
+sed -i "s|/home/gangx|$HOME|g" \
+  ~/dotfiles/stow/noctalia/.config/noctalia/noctalia-config.toml
+```
+
+少数路径无法用变量表达，只能手工调整：`~/.emacs.d/themes/noctalia-theme.el`、
+`~/.vscode/extensions/...`、壁纸目录，以及 niri 里的代理端口
+（`stow/niri/.config/niri/config.kdl` 的 `127.0.0.1:7890`）。
+
+## 与上游 [NyxNiri / Nyxuri](https://github.com/ech678/NyxNiri) 的关系
+
+> 上游已更名为 **Nyxuri**，CLI 由 `nyxniri` 变为 `nyxuri`（保留旧名兼容）。
+> 本地克隆目录仍为 `~/NyxNiri`，本机安装的命令行仍是 `nyxniri`。
 
 [`~/NyxNiri`](https://github.com/ech678/NyxNiri) 仍在管理 `fish`、`starship`、`fastfetch`、`zed`、
 `xdg-desktop-portal` 等系统层配置，部署方式是**复制**。它与本仓库重叠的有
@@ -159,18 +188,23 @@ emacs --batch --eval '(message "ok")'
   NyxMellow 皮肤，写入后**符号链接会变成实体文件**（实测 2026-09-14），
   于是本仓库的改动不再生效。跑完 `nyxniri` 后请执行 `./install.sh status`
   检查，出现冲突就删除实体文件后 `./install.sh link` 重建链接。
+  （上游已修复「主题写进 `[ClassicUI]` 段导致皮肤不生效」的问题，
+  但复制式部署仍会把符号链接替换成实体文件。）
 - 需要改 niri / kitty / noctalia 时，请改本仓库后 `./install.sh link`，
   不要再走 [NyxNiri](https://github.com/ech678/NyxNiri)。
 
-### fcitx5 皮肤为什么要重启输入法
+### fcitx5 皮肤为什么必须显式重载
 
 fcitx5 只在**启动时**读取主题资源（`theme.conf` / `panel.svg` / `highlight.svg`）。
 实测（inotify 监控主题目录）：`fcitx5-remote --check -r` 重载配置时零文件访问，
 把 `classicui.conf` 的 `Theme` 改成别的名字再改回来同样零访问。所以 Noctalia
-重渲染皮肤后必须重启 fcitx5，否则候选窗会一直停留在启动时那份皮肤。
+重渲染皮肤后必须让 fcitx5 真正重载经典界面，否则候选窗会一直停留在启动时那份皮肤。
 
-本仓库用 `noctalia/fcitx-theme-reload.sh` 处理：先比对皮肤内容指纹，只有真的
-变了才重启 fcitx5，避免每次调色板变化都打断输入。Noctalia 的模板 hook 指向它。
+做法写在 `noctalia-config.toml` 里 `nyxmellow_highlight` 模板的 `post_hook`：
+先 `fcitx5-remote --check -r`（仅在 fcitx5 已运行时才刷新），再用
+`busctl --user call org.fcitx.Fcitx5 /controller ... ReloadAddonConfig s classicui`
+强制重载 ClassicUI，两步都失败也静默放过，不打断输入。
+早期版本用的 `noctalia/fcitx-theme-reload.sh` 指纹脚本已在 77851b1 移除。
 
 ## 主题链路
 
