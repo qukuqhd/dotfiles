@@ -37,7 +37,7 @@ environment {
     no_proxy "localhost,127.0.0.1,::1,api.noctalia.dev"
 }
 
-spawn-at-startup "~/.config/niri/scripts/start-noctalia.sh"
+spawn-at-startup "~/.config/niri/scripts/session-shell.sh"
 // niri does not consume /etc/xdg/autostart entries on its own.
 spawn-at-startup "sh" "-c" "command -v fcitx5 >/dev/null 2>&1 && exec fcitx5 -d"
 spawn-at-startup "~/.config/niri/scripts/toggle-eyecare.sh" "--sync"
