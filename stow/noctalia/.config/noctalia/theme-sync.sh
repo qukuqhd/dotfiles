@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# NyxNiri System Theme Dispatcher & Bus (theme-sync.sh)
-# High-robustness, atomic, zero-entropy theme synchronization engine.
+# Nyxuri theme dispatcher (theme-sync.sh)
+# Keeps GTK, Qt, Kitty, and the desktop color scheme in step.
 # ==============================================================================
 
 set -uo pipefail
 
 # 1. Portability: Overridable theme configuration variables
-GTK_THEME_DARK="${NYXNIRI_GTK_THEME_DARK:-adw-gtk3-dark}"
-GTK_THEME_LIGHT="${NYXNIRI_GTK_THEME_LIGHT:-adw-gtk3}"
-KVANTUM_THEME_DARK="${NYXNIRI_KVANTUM_DARK:-KvLibadwaitaDark}"
-KVANTUM_THEME_LIGHT="${NYXNIRI_KVANTUM_LIGHT:-KvLibadwaita}"
-DEFAULT_FALLBACK_MODE="${NYXNIRI_DEFAULT_MODE:-dark}"
+GTK_THEME_DARK="${NYXURI_GTK_THEME_DARK:-${NYXNIRI_GTK_THEME_DARK:-adw-gtk3-dark}}"
+GTK_THEME_LIGHT="${NYXURI_GTK_THEME_LIGHT:-${NYXNIRI_GTK_THEME_LIGHT:-adw-gtk3}}"
+KVANTUM_THEME_DARK="${NYXURI_KVANTUM_DARK:-${NYXNIRI_KVANTUM_DARK:-KvLibadwaitaDark}}"
+KVANTUM_THEME_LIGHT="${NYXURI_KVANTUM_LIGHT:-${NYXNIRI_KVANTUM_LIGHT:-KvLibadwaita}}"
+DEFAULT_FALLBACK_MODE="${NYXURI_DEFAULT_MODE:-${NYXNIRI_DEFAULT_MODE:-dark}}"
 
 # 2. Concurrency Lock: Prevent race conditions from rapid toggles or startup hooks
-LOCK_FILE="${XDG_RUNTIME_DIR:-/tmp}/nyxniri-${UID}-theme-sync.lock"
+LOCK_FILE="${XDG_RUNTIME_DIR:-/tmp}/nyxuri-${UID}-theme-sync.lock"
 exec 9>"$LOCK_FILE"
 flock -w 5 9 || {
     echo "[!] Theme sync locked by another process. Skipping." >&2

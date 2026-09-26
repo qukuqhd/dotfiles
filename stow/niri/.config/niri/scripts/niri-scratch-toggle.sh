@@ -1,5 +1,5 @@
 #!/bin/bash
-# NyxNiri Multi-App Scratchpad Toggle
+# Nyxuri multi-app scratchpad toggle
 # Controls floating scratchpad lifecycle for Kitty, Mission Center, Nautilus, and custom apps.
 
 # shellcheck disable=SC2317
@@ -9,7 +9,7 @@ TARGET_APP="${1:-kitty}"
 
 # ── Serialization Lock ──────────────────────────────────────────────
 LOCK_NAME=$(printf '%s' "$TARGET_APP" | tr -c 'a-zA-Z0-9_' '_')
-exec 9>"${XDG_RUNTIME_DIR:-/tmp}/nyxniri-scratch-${LOCK_NAME}.lock"
+exec 9>"${XDG_RUNTIME_DIR:-/tmp}/nyxuri-${UID}-scratch-${LOCK_NAME}.lock"
 flock -n 9 || exit 0
 
 # ── 非 niri 会话回退 (Hyprland) ────────────────────────────────────────────

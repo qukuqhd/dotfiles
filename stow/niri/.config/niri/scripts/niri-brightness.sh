@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Brightness keys: laptop backlight via Noctalia, external DDC via ddcutil.
 #
-# NyxNiri keeps Noctalia [brightness] enable_ddcutil = false so the shell
+# Nyxuri keeps Noctalia [brightness] enable_ddcutil = false so the shell
 # does not scan I2C at startup (NVIDIA hang). Internal panels also do not
 # speak DDC/CI, so the old niri bind (`ddcutil setvcp 10 ± 10`) was a no-op
 # on laptops. This script restores both paths without turning DDC discovery
@@ -33,7 +33,7 @@ case "$connector" in
         ;;
 esac
 
-backlight_dir="${NYXNIRI_BACKLIGHT_DIR:-/sys/class/backlight}"
+backlight_dir="${NYXURI_BACKLIGHT_DIR:-${NYXNIRI_BACKLIGHT_DIR:-/sys/class/backlight}}"
 has_backlight=false
 if [ -d "$backlight_dir" ]; then
     for dev in "$backlight_dir"/*; do
