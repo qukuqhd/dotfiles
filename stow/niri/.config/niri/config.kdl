@@ -24,6 +24,8 @@ environment {
     XDG_CURRENT_DESKTOP "niri"
     XDG_SESSION_TYPE "wayland"
     GTK_IM_MODULE ""
+    QT_IM_MODULE "fcitx"
+    XMODIFIERS "@im=fcitx"
     QT_QPA_PLATFORM "wayland;xcb"
     QT_QPA_PLATFORMTHEME "gtk3"
     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
