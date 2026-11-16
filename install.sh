@@ -27,8 +27,8 @@ VOLATILE_PATHS=(
 )
 
 # 独立 git 仓库：「仓库内路径|目标位置」，二者内容由各自的 git 仓库管理。
+# Neovim 配置已经迁入 stow/nvim，不再走这里。
 EXTERNAL_LINKS=(
-  "external/nvim|.config/nvim"
   "external/emacs|.emacs.d"
 )
 

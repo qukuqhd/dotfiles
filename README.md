@@ -14,8 +14,9 @@ dotfiles/
 │   ├── foot/.config/foot/
 │   ├── hypr/.config/hypr/…
 │   ├── noctalia/.config/noctalia/…
-│   └── noctalia-integrations/.config/{labwc,sway,mango,umbriel,scroll}/
-├── external/                   # 独立 git 仓库（nvim / emacs），见 external/README.md
+│   ├── noctalia-integrations/.config/{labwc,sway,mango,umbriel,scroll}/
+│   └── nvim/.config/nvim/…     # Neovim 配置（源自 kickstart.nvim 的本地 fork）
+├── external/                   # 独立 git 仓库（emacs），见 external/README.md
 └── install.sh                  # 部署脚本
 ```
 
@@ -56,7 +57,7 @@ cd ~/dotfiles
 
 | 包 | 用途 |
 |---|---|
-| `neovim`（≥ 0.12） | `external/nvim`；使用内置 `vim.pack`，版本锁定在 `nvim-pack-lock.json` |
+| `neovim`（≥ 0.12） | `stow/nvim`；使用内置 `vim.pack`，插件版本记录在 `~/.config/nvim/nvim-pack-lock.json`（本机生成，不入库） |
 | `ripgrep`、`fd` | 搜索（telescope 等） |
 | `unzip`、`gcc`、`make` | 插件解压与 Treesitter/LSP 编译 |
 | `nodejs`、`npm` | 部分 LSP 与插件的运行时 |
@@ -108,12 +109,15 @@ sudo pacman -S --needed hyprland grim slurp foot nautilus
 
 ```bash
 git clone https://github.com/qukuqhd/dotfiles ~/dotfiles
-git clone <你的 kickstart fork> ~/dotfiles/external/nvim
-git clone <你的 Centaur fork>   ~/dotfiles/external/emacs
+git clone <你的 Centaur fork> ~/dotfiles/external/emacs
 ```
 
-`external/` 下的两个目录是独立 git 仓库，不放进 dotfiles 的版本控制；没有它们
+Neovim 配置已经随仓库提供（`stow/nvim/.config/nvim`），不再需要单独 clone。
+`external/emacs` 仍是独立 git 仓库，不放进 dotfiles 的版本控制；没有它
 `install.sh link` 只会提示缺失，不影响其余包。
+
+> Neovim 配置原先来自 kickstart.nvim 的本地 fork，现在以快照形式放在
+> `stow/nvim`；跟进 kickstart 上游时需要手工比对（例如对比备份的 fork 仓库）。
 
 ### 3. 部署链接
 
@@ -154,7 +158,7 @@ emacs --batch --eval '(message "ok")'
 
 | 内容 | 说明 |
 |---|---|
-| `external/nvim`、`external/emacs` | 独立 git 仓库，先 clone 自己的 fork 到 `external/` 再 `./install.sh link` |
+| `external/emacs` | 独立 git 仓库，先 clone 自己的 fork 到 `external/` 再 `./install.sh link`；Neovim 配置已在仓库里 |
 | Noctalia 渲染产物 | `niri/noctalia.kdl`、`kitty/themes/noctalia.conf`、`alacritty`/`foot`/`hypr` 的 noctalia 主题等，首次进入会话后由 Noctalia 生成，也可手动 `noctalia msg templates-apply` |
 | fcitx5 输入法本体配置 | 仓库只收录 `conf/classicui.conf`；`profile`、`config`、各输入法的 `conf/*.conf` 需自行配置 |
 | NyxMellow 皮肤资产 | `~/.local/share/fcitx5/themes/nyxmellow/`（模板 + 预览 SVG）来自上游安装器，未入库；缺失时候选窗会回落默认皮肤 |

@@ -1,5 +1,4 @@
 # 独立 git 仓库（各自维护自己的历史，不纳入本仓库）
-external/nvim/
 external/emacs/
 
 # 运行时生成物 / 备份
