@@ -1,3 +1,6 @@
+-- Vendored from https://github.com/clice-io/clice/blob/main/editors/nvim/lsp/clice.lua
+-- clice is licensed under Apache-2.0.
+
 ---@brief
 ---
 --- https://github.com/clice-io/clice
