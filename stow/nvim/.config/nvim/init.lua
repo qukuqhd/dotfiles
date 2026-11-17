@@ -847,10 +847,22 @@ do
   -- 它不在 nvim-lspconfig 里，也不由 Mason 管理；clangd 已从 servers 移除。
   vim.lsp.enable('clice')
 
-  -- Haskell：用 ghcup 里的 HLS（不交给 Mason）。PATH 里加入 ghcup，
-  -- 让 wrapper 能找到对应 GHC 的 haskell-language-server-*。
+  -- Haskell：用 ghcup 里的 HLS（不交给 Mason）。不硬编码版本：
+  -- 先查 PATH 里的 wrapper，找不到就取 ~/.ghcup/bin 下最新的 wrapper。
+  local function hls_command()
+    local ghcup = vim.fn.expand('~/.ghcup/bin')
+    if not (vim.env.PATH or ''):find(ghcup, 1, true) then
+      vim.env.PATH = ghcup .. ':' .. (vim.env.PATH or '')
+    end
+    local exe = vim.fn.exepath('haskell-language-server-wrapper')
+    if exe ~= '' then return exe end
+    local candidates = vim.fn.glob(ghcup .. '/haskell-language-server-wrapper-*', false, true)
+    table.sort(candidates, function(a, b) return a > b end)
+    return candidates[1] or 'haskell-language-server-wrapper'
+  end
+
   vim.lsp.config('hls', {
-    cmd = { vim.fn.expand('~/.ghcup/bin/haskell-language-server-wrapper-2.14.0.0'), '--lsp' },
+    cmd = { hls_command(), '--lsp' },
     cmd_env = { PATH = vim.fn.expand('~/.ghcup/bin') .. ':' .. (vim.env.PATH or '') },
     filetypes = { 'haskell' },
     root_markers = { 'hie.yaml', 'stack.yaml', 'cabal.project', '*.cabal', 'package.yaml', '.git' },
