@@ -63,6 +63,7 @@ cd ~/dotfiles
 | `nodejs`、`npm` | 部分 LSP 与插件的运行时 |
 | `tree-sitter-cli` | 解析器编译 |
 | `emacs`（≥ 29） | `external/emacs`（Centaur Emacs） |
+| `ghcup`（GHC、cabal、stack、HLS） | Haskell 工具链；HLS 由 Emacs（`haskell-mode` + Eglot）和 Neovim（`hls`）共用 |
 
 ### 字体
 

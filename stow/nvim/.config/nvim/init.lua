@@ -846,6 +846,16 @@ do
   -- C/C++：clice 的完整配置放在 lsp/clice.lua（Neovim 0.11+ 自动发现）。
   -- 它不在 nvim-lspconfig 里，也不由 Mason 管理；clangd 已从 servers 移除。
   vim.lsp.enable('clice')
+
+  -- Haskell：用 ghcup 里的 HLS（不交给 Mason）。PATH 里加入 ghcup，
+  -- 让 wrapper 能找到对应 GHC 的 haskell-language-server-*。
+  vim.lsp.config('hls', {
+    cmd = { vim.fn.expand('~/.ghcup/bin/haskell-language-server-wrapper-2.14.0.0'), '--lsp' },
+    cmd_env = { PATH = vim.fn.expand('~/.ghcup/bin') .. ':' .. (vim.env.PATH or '') },
+    filetypes = { 'haskell' },
+    root_markers = { 'hie.yaml', 'stack.yaml', 'cabal.project', '*.cabal', 'package.yaml', '.git' },
+  })
+  vim.lsp.enable('hls')
 end
 
 -- ============================================================
@@ -863,6 +873,8 @@ do
         ocaml = true,
         -- Go：保存时用 goimports 自动格式化（如需手工格式化可删掉这行）
         go = true,
+        -- Haskell：保存时用 HLS 格式化
+        haskell = true,
         -- 前端文件：保存时自动用 prettier 格式化
         javascript = true,
         javascriptreact = true,
@@ -892,6 +904,8 @@ do
     formatters_by_ft = {
       c = { 'clang-format' },
       cpp = { 'clang-format' },
+      -- Haskell：优先使用 HLS 的 textDocument/formatting（ormolu/fourmolu 由 HLS 调用）
+      haskell = { lsp_format = 'first' },
       cmake = { 'cmake_format' },
       -- Go：优先 goimports，不可用时退回系统自带的 gofmt
       go = { 'goimports', 'gofmt', stop_after_first = true },
