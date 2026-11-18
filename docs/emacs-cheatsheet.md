@@ -22,7 +22,8 @@ docstring 仍是英文（Emacs 没有运行时 i18n），官方中文资料见�
   - mode-line / fixed-pitch：JetBrainsMono NF
   - variable-pitch：Adwaita Sans
   - frame：94% 背景透明度 + 1px 主题色内边框
-- 本速查：`M-x my/emacs-cheatsheet`
+- 中文教程：`C-h t`（强制打开 `TUTORIAL.cn`；`C-u C-h t` 仍可选择语言）
+- 本速查：`C-c ?` 或 `M-x my/emacs-cheatsheet`
 
 ## clice（C/C++）
 
@@ -65,7 +66,7 @@ docstring 仍是英文（Emacs 没有运行时 i18n），官方中文资料见�
 
 ## Emacs 官方中文资料
 
-- 中文教程：`C-h t`（`TUTORIAL.cn`，系统已带）
+- 中文教程：`C-h t`（`TUTORIAL.cn`，已绑定为强制中文；`C-u C-h t` 选择语言）
 - 语言环境：`M-x set-language-environment`，本机 `LANG=zh_CN.UTF-8`
   通常已是 `Chinese-GBK`；这只影响编码/输入，不会翻译界面
 - 官方 `emacs.info` / `elisp.info` 目前是英文，系统未安装中文 Info 手册
