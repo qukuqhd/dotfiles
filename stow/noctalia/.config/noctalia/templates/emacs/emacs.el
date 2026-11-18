@@ -344,6 +344,99 @@
    
    ;; Variable-pitch face
    `(variable-pitch ((t (:family "sans serif"))))
+
+   ;; Doom modeline (Centaur uses it instead of the plain mode-line)
+   `(doom-modeline-bar ((t (:background ,primary :foreground ,on-primary))))
+   `(doom-modeline-bar-inactive ((t (:background ,surface-container-low :foreground ,on-surface-variant))))
+   `(doom-modeline-buffer-path ((t (:foreground ,on-surface-variant))))
+   `(doom-modeline-buffer-file ((t (:foreground ,on-surface))))
+   `(doom-modeline-buffer-modified ((t (:foreground ,err :weight bold))))
+   `(doom-modeline-buffer-major-mode ((t (:foreground ,primary))))
+   `(doom-modeline-project-name ((t (:foreground ,secondary))))
+   `(doom-modeline-project-dir ((t (:foreground ,on-surface-variant))))
+   `(doom-modeline-vcs ((t (:foreground ,tertiary))))
+   `(doom-modeline-info ((t (:foreground ,primary))))
+   `(doom-modeline-warning ((t (:foreground ,secondary))))
+   `(doom-modeline-error ((t (:foreground ,err))))
+   `(doom-modeline-panel ((t (:background ,surface-container-high :foreground ,on-surface))))
+   `(doom-modeline-input ((t (:background ,primary-container :foreground ,on-primary-container))))
+   `(doom-modeline-time ((t (:foreground ,on-surface-variant))))
+   `(doom-modeline-host ((t (:foreground ,tertiary))))
+   `(doom-modeline-debug ((t (:foreground ,tertiary))))
+   `(doom-modeline-urgent ((t (:foreground ,err))))
+
+   ;; Dashboard
+   `(dashboard-text-banner ((t (:foreground ,primary))))
+   `(dashboard-banner-logo-title ((t (:foreground ,primary :weight bold))))
+   `(dashboard-navigator ((t (:foreground ,on-surface-variant))))
+   `(dashboard-heading ((t (:foreground ,primary :weight bold))))
+   `(dashboard-items-face ((t (:foreground ,on-surface))))
+   `(dashboard-no-items-face ((t (:foreground ,outline-color))))
+   `(dashboard-footer-face ((t (:foreground ,outline-color))))
+   `(dashboard-footer-icon-face ((t (:foreground ,tertiary))))
+
+   ;; Flymake (Centaur uses Flymake; Flycheck faces above are legacy)
+   `(flymake-error ((t (:underline (:style wave :color ,err)))))
+   `(flymake-warning ((t (:underline (:style wave :color ,secondary)))))
+   `(flymake-note ((t (:underline (:style wave :color ,tertiary)))))
+   `(flymake-error-echo-at-eol ((t (:foreground ,err))))
+   `(flymake-warning-echo-at-eol ((t (:foreground ,secondary))))
+   `(flymake-note-echo-at-eol ((t (:foreground ,tertiary))))
+   `(flymake-end-of-line-diagnostics-face ((t (:foreground ,outline-color))))
+
+   ;; diff-hl
+   `(diff-hl-insert ((t (:foreground ,success))))
+   `(diff-hl-change ((t (:foreground ,primary))))
+   `(diff-hl-delete ((t (:foreground ,err))))
+   `(diff-hl-unknown ((t (:foreground ,outline-color))))
+   `(diff-hl-insert-fringe ((t (:foreground ,success))))
+   `(diff-hl-change-fringe ((t (:foreground ,primary))))
+   `(diff-hl-delete-fringe ((t (:foreground ,err))))
+
+   ;; Vertico / Consult
+   `(vertico-current ((t (:background ,surface-container-high :foreground ,on-surface))))
+   `(vertico-group-title ((t (:foreground ,primary :weight bold))))
+   `(vertico-group-separator ((t (:foreground ,outline-variant))))
+   `(vertico-multiline ((t (:foreground ,outline-color))))
+   `(consult-preview-line ((t (:background ,surface-container-low :extend t))))
+   `(consult-preview-match ((t (:background ,primary-container :foreground ,on-primary-container))))
+   `(consult-async-split ((t (:foreground ,primary))))
+   `(consult-line-number ((t (:foreground ,outline-color))))
+   `(consult-file ((t (:foreground ,on-surface))))
+   `(consult-separator ((t (:foreground ,outline-variant))))
+
+   ;; Eglot
+   `(eglot-highlight-symbol-face ((t (:background ,primary-container :foreground ,on-primary-container))))
+   `(eglot-diagnostic-tag-unnecessary-face ((t (:foreground ,outline-color))))
+   `(eglot-mode-line ((t (:foreground ,primary))))
+
+   ;; Transient
+   `(transient-heading ((t (:foreground ,primary :weight bold))))
+   `(transient-key ((t (:foreground ,secondary))))
+   `(transient-argument ((t (:foreground ,on-surface))))
+   `(transient-value ((t (:foreground ,tertiary))))
+   `(transient-inactive-argument ((t (:foreground ,outline-color))))
+   `(transient-inactive-value ((t (:foreground ,outline-color))))
+   `(transient-delimiter ((t (:foreground ,outline-variant))))
+   `(transient-fixed ((t (:foreground ,success))))
+   `(transient-unreachable ((t (:foreground ,outline-color))))
+
+   ;; Treemacs
+   `(treemacs-root-face ((t (:foreground ,primary :weight bold))))
+   `(treemacs-directory-face ((t (:foreground ,primary))))
+   `(treemacs-file-face ((t (:foreground ,on-surface))))
+   `(treemacs-git-modified-face ((t (:foreground ,secondary))))
+   `(treemacs-git-added-face ((t (:foreground ,success))))
+   `(treemacs-git-untracked-face ((t (:foreground ,tertiary))))
+   `(treemacs-git-conflict-face ((t (:foreground ,err))))
+   `(treemacs-tags-face ((t (:foreground ,on-surface-variant))))
+
+   ;; Corfu popup info
+   `(corfu-popupinfo ((t (:background ,surface-container-low :foreground ,on-surface-variant))))
+   `(corfu-annotations ((t (:foreground ,outline-color))))
+
+   ;; Eldoc
+   `(eldoc-highlight-function-argument ((t (:foreground ,primary :weight bold))))
    ))
 
 ;; Add org-mode hooks for hiding leading stars
