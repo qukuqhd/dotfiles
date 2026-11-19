@@ -437,6 +437,25 @@
 
    ;; Eldoc
    `(eldoc-highlight-function-argument ((t (:foreground ,primary :weight bold))))
+
+   ;; Granular font-lock faces (treesit/c-ts-mode and newer major modes)
+   `(font-lock-number-face ((t (:foreground ,tertiary))))
+   `(font-lock-operator-face ((t (:foreground ,secondary))))
+   `(font-lock-bracket-face ((t (:foreground ,on-surface-variant))))
+   `(font-lock-delimiter-face ((t (:foreground ,on-surface-variant))))
+   `(font-lock-property-name-face ((t (:foreground ,primary))))
+   `(font-lock-property-use-face ((t (:foreground ,primary))))
+   `(font-lock-variable-use-face ((t (:foreground ,on-surface))))
+   `(font-lock-misc-punctuation-face ((t (:foreground ,on-surface-variant))))
+   `(font-lock-regexp-face ((t (:foreground ,tertiary))))
+   `(font-lock-regexp-grouping-backslash ((t (:foreground ,secondary :weight bold))))
+   `(font-lock-regexp-grouping-construct ((t (:foreground ,secondary :weight bold))))
+   `(font-lock-escape-face ((t (:foreground ,secondary))))
+
+   ;; Eglot inlay hints
+   `(eglot-inlay-hint-face ((t (:inherit shadow))))
+   `(eglot-type-hint-face ((t (:inherit font-lock-type-face :slant italic))))
+   `(eglot-parameter-hint-face ((t (:inherit font-lock-variable-name-face :slant italic))))
    ))
 
 ;; Add org-mode hooks for hiding leading stars
